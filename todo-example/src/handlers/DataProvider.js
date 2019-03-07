@@ -15,69 +15,67 @@ export default class DataProvider extends Component {
         }
     }
 
-    getTodos = () => {
-
-        return Axios.get(url)
-            .then(res =>(
-                this.setState({
-                    todos:res.data
-           
-                })
-            ))
-            .catch(err => {
-                this.setState({
-                    errMsg: err
-                })
-            })        
+    getTodos = async () => {
+        try{
+            let res = await Axios.get(url) 
+            this.setState({
+                todos:res.data
+        
+            })
+        }
+        catch(err){
+            this.setState({
+                errMsg: err
+            })
+        }     
     }
 
-    addTodo = (todo) => {
-        return Axios.post(url, todo)
-            .then(res => {
-                this.setState(ps => ({
-                    todos: [...ps.todos, res.data]
-                }))
+    addTodo = async (todo) => {
+        try{
+            let res = await Axios.post(url, todo)
+            this.setState(ps => ({
+                todos: [...ps.todos, res.data]
+            }))
+        }
+        catch(err){
+            this.setState({
+                errMsg:err
             })
-            .catch(err => {
-                this.setState({
-                    errMsg:err
-                })
-            })
+        }
     }
 
-    deleteTodo = (id) => {
-        return Axios.delete(url + "/" + id)
-            .then(res => {
-                const foundTodoIndex = this.state.todos.map(todo => (todo._id)).indexOf(id)
-                const todosArr = this.state.todos
-                todosArr.splice(foundTodoIndex,1)
-                this.setState({
-                    todos: [...todosArr]
-                })
-
+    deleteTodo = async (id) => {
+        try{
+            let res = await Axios.delete(url + "/" + id)
+            const foundTodoIndex = this.state.todos.map(todo => (todo._id)).indexOf(id)
+            const todosArr = this.state.todos
+            todosArr.splice(foundTodoIndex,1)
+            this.setState({
+                todos: [...todosArr]
             })
-            .catch(err => {
-                this.setState({
-                    errMsg:err
-                })
+        }
+        catch(err){
+            this.setState({
+                errMsg:err
             })
+        }
     }
 
-    editTodo = (id, todo) => {
-        return Axios.put(url + "/" + id,{...todo})
-            .then(res => {
-                const foundTodoIndex = this.state.todos.map(todo => (todo._id)).indexOf(id)
-                const todosArr = this.state.todos
-                todosArr.splice(foundTodoIndex,1,res.data)
-                this.setState({
-                    todos: [...todosArr]
-                })
+    editTodo = async (id, todo) => {
+        try{
+            let res = await Axios.put(url + "/" + id,{...todo})
+            const foundTodoIndex = this.state.todos.map(todo => (todo._id)).indexOf(id)
+            const todosArr = this.state.todos
+            todosArr.splice(foundTodoIndex,1,res.data)
+            this.setState({
+                todos: [...todosArr]
             })
-            .catch(err => {
-                this.setState({
-                    errMsg: err
-                })
+        }
+        catch(err){
+            this.setState({
+                errMsg: err
             })
+        }
     }
 
     componentDidMount = () => {

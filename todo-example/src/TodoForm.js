@@ -10,7 +10,7 @@ function TodoForm(props) {
         description:props.todo ? props.todo.description : "",
         price:props.todo ? props.todo.price : 10
     }
-    console.log(props)
+
     return(
         <FormHandler inputs={todoInputs} submit={props.type == 'add' ? (todoInputs) => props.addTodo(todoInputs) : (todoInputs) => props.editTodo(props.todo._id,todoInputs).then(()=>{props.toggleSwitch()})} >
             {
