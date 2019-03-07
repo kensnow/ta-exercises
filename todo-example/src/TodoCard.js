@@ -5,11 +5,12 @@ import TodoForm from './TodoForm'
 function TodoCard(props) {
     const {_id, completed, title, description, price, imgUrl} = props.todo
     const {deleteTodo, editTodo} = props.provider
-    console.log(props)
+
     return (
         <>
-        {props.on ? 
-            <TodoForm {...props.todo}/>:         
+        {   props.on ? 
+            <TodoForm todo={props.todo} type={'edit'} toggleSwitch={props.toggleSwitch} />
+            :         
             <div className="todo-card">
                 <button onClick={() => props.toggleSwitch()}>Edit</button>
                 <button onClick={() => deleteTodo(_id)}>X</button>

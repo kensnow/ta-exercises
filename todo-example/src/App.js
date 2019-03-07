@@ -7,7 +7,7 @@ function App(props) {
     const todoGroup = props.todos.map((todo, i) => <TodoCard key={i} provider={props} todo={todo}/>)
     return (
         <div>
-            <TodoForm todo={null}/>
+            <TodoForm todo={null} type={'add'}/>
             {todoGroup}
         </div>
     )

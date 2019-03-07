@@ -12,7 +12,7 @@ function TodoForm(props) {
     }
     console.log(props)
     return(
-        <FormHandler inputs={todoInputs} submit={(todoInputs) => props.addTodo(todoInputs)} >
+        <FormHandler inputs={todoInputs} submit={props.type == 'add' ? (todoInputs) => props.addTodo(todoInputs) : (todoInputs) => props.editTodo(props.todo._id,todoInputs).then(()=>{props.toggleSwitch()})} >
             {
                 ({ handleChange, handleSubmit }) => {
                     return(

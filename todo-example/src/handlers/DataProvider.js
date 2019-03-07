@@ -63,12 +63,21 @@ export default class DataProvider extends Component {
             })
     }
 
-    editTodo = (id) => {
-        const foundTodo = this.state.todos.find(todo => (todo._id === id))
-        console.log(foundTodo)
-        // return(
-        //     <Form>
-        // )
+    editTodo = (id, todo) => {
+        return Axios.put(url + "/" + id,{...todo})
+            .then(res => {
+                const foundTodoIndex = this.state.todos.map(todo => (todo._id)).indexOf(id)
+                const todosArr = this.state.todos
+                todosArr.splice(foundTodoIndex,1,res.data)
+                this.setState({
+                    todos: [...todosArr]
+                })
+            })
+            .catch(err => {
+                this.setState({
+                    errMsg: err
+                })
+            })
     }
 
     componentDidMount = () => {
