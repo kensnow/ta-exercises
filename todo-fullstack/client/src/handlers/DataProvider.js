@@ -4,7 +4,7 @@ import Axios from 'axios';
 
 export const {Consumer, Provider} = createContext()
 
-const url = "https://api.vschool.io/ken_snow/todo"
+const url = "/api/todos"
 
 export default class DataProvider extends Component {
     constructor(){
