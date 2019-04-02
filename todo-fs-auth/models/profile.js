@@ -12,22 +12,7 @@ const profileSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    todos:[{    
-        name:{
-            type:String,
-            required:true
-        },
-        description: String,
-        value:{
-            type:Number,
-            default: 5
-        },
-        createdOn:{
-            type:Date,
-            default: Date.now()
-        },
-        completedOn:Date
-    }]
+    todos:[objectId]
 
 })
 

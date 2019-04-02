@@ -11,6 +11,10 @@ const todoSchema = new mongoose.Schema({
         required:true
     },
     description: String,
+    isComplete: {
+        type: Boolean,
+        default: false
+    },
     value:{
         type:Number,
         default: 5
