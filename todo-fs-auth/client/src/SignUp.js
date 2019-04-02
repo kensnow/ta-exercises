@@ -11,6 +11,7 @@ function SignUp() {
         password:'',
         confirm:''
     }
+    
     return (
         <FormProvider inputs={inputs} submit={(inputs) => {
             inputs.password === inputs.confirm ? console.log('yes') : setErrMsg('Please enter matching passwords')
