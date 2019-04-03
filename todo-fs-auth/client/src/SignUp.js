@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import FormProvider from './providers/FormProvider'
+import {withProfileProvider} from './providers/ProfileProvider'
 
-
-function SignUp() {
+function SignUp(props) {
 
     const [errMsg, setErrMsg] = useState('')
 
@@ -11,10 +11,10 @@ function SignUp() {
         password:'',
         confirm:''
     }
-    
+
     return (
         <FormProvider inputs={inputs} submit={(inputs) => {
-            inputs.password === inputs.confirm ? console.log('yes') : setErrMsg('Please enter matching passwords')
+            inputs.password === inputs.confirm ? props.signUp(inputs) : setErrMsg('Please enter matching passwords')
             }}>
             {
                 ({handleChange, handleSubmit}) => {
@@ -33,4 +33,4 @@ function SignUp() {
     )
 }
 
-export default SignUp
+export default withProfileProvider(SignUp)
