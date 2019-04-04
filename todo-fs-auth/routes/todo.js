@@ -59,23 +59,20 @@ todoRouter.route('/:id')
     
     .delete((req, res, next) => {
         todoId = req.params
-        userId = req.body.todo.user
-        Todo.findByIdAndDelete(todoId)
-            .then(() => {
-                Profile.findById(userId)
-                    .then(foundUser => {
-                        const todoIndex = foundUser.todos.find(todoRef => todoRef === todoId).indexOf()
-                        foundUser.todos.splice(todoIndex, 1)
-                        foundUser.save()
-                        res.status(200).send('Delete Complete')
-                    })
-                    .catch(err => {
-                        res.status(500)
-                        next(err)
-                    })
+        userId = req.user
+        //set up so server saves all todos, only users delete id from thier user object
+        Profile.findById(userId)
+            .then(foundUser => {
+                const todoIndex = foundUser.todos.find(todoRef => todoRef === todoId).indexOf()
+                foundUser.todos.splice(todoIndex, 1)
+                foundUser.save()
+                res.status(200).send('Delete Complete')
             })
             .catch(err => {
                 res.status(500)
                 next(err)
             })
+
     })
+
+    module.exports = todoRouter
