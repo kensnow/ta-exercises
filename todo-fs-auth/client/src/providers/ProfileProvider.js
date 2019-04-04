@@ -1,7 +1,6 @@
 import React, { Component, createContext } from 'react'
 import axios from 'axios'
 
-
 const {Consumer, Provider} = createContext()
 
 export default class ProfileProvider extends Component {
@@ -14,7 +13,6 @@ export default class ProfileProvider extends Component {
             token:'',
             errMsg:''
         }
-
     }
 
     logIn = (userDat) => {

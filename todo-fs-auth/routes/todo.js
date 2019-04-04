@@ -7,22 +7,23 @@ const todoRouter = express.Router()
 
 todoRouter.route('/')
     .get((req, res, next) => {
-        const profileId = req.body.user._id
-        Profile.findById(profileId)
-            .then(profile => {
-                Todo.find({
-                    _id : {$in: profile.todos}
-                })
-                .then(todoArr => res.status(200).send(todoArr))
-                .catch(err => {
-                    res.status(500)
-                    next(err)
-                })
+        const profileId = req.user._id
+        Profile.find({user: profileId}, (err, todos) => {
+            if (err){
+                res.status(500)
+                return next(err)
+            } else {
+                return res.send(todos)
+            }
         })
+
+
+
     })
     .post((req, res, next) => {
-        const todoData = req.body.todo
+        const todoData = req.body
         const todoDoc = new Todo (todoData)
+        todoDoc.user = req.user._id
         todoDoc.save()
             .then(savedTodo => {
                 const profileId = req.body.user._id

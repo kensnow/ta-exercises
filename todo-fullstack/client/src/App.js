@@ -4,6 +4,7 @@ import {withDataProvider} from './handlers/DataProvider'
 import TodoCard from './TodoCard'
 
 function App(props) {
+    console.log(props)
     const todoGroup = props.todos.map((todo, i) => <TodoCard key={i} provider={props} todo={todo}/>)
     return (
         <div>

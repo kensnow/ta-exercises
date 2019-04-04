@@ -4,6 +4,7 @@ const objectId = mongoose.Schema.Types.ObjectId
 const todoSchema = new mongoose.Schema({
     user: {
         type:objectId,
+        ref: 'Profile',
         required:true
     },
     name:{

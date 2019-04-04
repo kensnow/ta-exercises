@@ -27,8 +27,6 @@ authRouter.post('/signup',(req,res,next) => {
                 })
             }
         })
-        const newUserProfile = new Profile(userDat)
-
     })
 
 authRouter.post('/login', (req, res, next) => {
