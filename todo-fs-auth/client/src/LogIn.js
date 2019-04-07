@@ -1,16 +1,16 @@
 import React from 'react'
 import FormProvider from './providers/FormProvider'
+import {withProfileProvider} from './providers/ProfileProvider'
+import {withRouter} from 'react-router-dom'
 
-
-
-function LogIn() {
+function LogIn(props) {
 
     const inputs = {
         email:'',
         password:''
     }
     return (
-        <FormProvider inputs={inputs} submit={() => console.log('submit')}>
+        <FormProvider inputs={inputs} submit={(inputs) => props.logIn(inputs).then(() => props.history.push('/todo'))}>
             {
                 ({handleChange, handleSubmit}) => {
                     return(
@@ -26,4 +26,4 @@ function LogIn() {
     )
 }
 
-export default LogIn
+export default withProfileProvider(LogIn)

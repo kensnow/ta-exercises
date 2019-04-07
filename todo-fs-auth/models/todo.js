@@ -7,7 +7,7 @@ const todoSchema = new mongoose.Schema({
         ref: 'Profile',
         required:true
     },
-    name:{
+    title:{
         type:String,
         required:true
     },

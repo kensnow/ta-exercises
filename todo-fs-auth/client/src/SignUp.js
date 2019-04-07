@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import FormProvider from './providers/FormProvider'
+import {withRouter} from 'react-router-dom'
 import {withProfileProvider} from './providers/ProfileProvider'
 
 function SignUp(props) {
@@ -14,7 +15,9 @@ function SignUp(props) {
 
     return (
         <FormProvider inputs={inputs} submit={(inputs) => {
-            inputs.password === inputs.confirm ? props.signUp(inputs) : setErrMsg('Please enter matching passwords')
+            inputs.password === inputs.confirm ? 
+            props.signUp(inputs).then(() => props.history.push('/todo')) : 
+            setErrMsg('Please enter matching passwords')
             }}>
             {
                 ({handleChange, handleSubmit}) => {
@@ -33,4 +36,4 @@ function SignUp(props) {
     )
 }
 
-export default withProfileProvider(SignUp)
+export default withRouter(withProfileProvider(SignUp))

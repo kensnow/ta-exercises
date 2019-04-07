@@ -3,22 +3,31 @@ import axios from 'axios'
 
 const {Consumer, Provider} = createContext()
 
+const profileAxios = axios.create()
+profileAxios.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token')
+    config.headers.Authorization = `Bearer ${token}`
+    return config
+})
+
 export default class ProfileProvider extends Component {
     constructor(){
         super()
         this.state = {
-            user:{},
+            user:JSON.parse(localStorage.getItem('user')) || {},
             email:'',
             password:'',
-            token:'',
+            token: localStorage.getItem('token') || '',
             errMsg:''
         }
     }
 
     logIn = (userDat) => {
-        axios.post('/auth/login', {...userDat})   
+        return profileAxios.post('/auth/login', {...userDat})   
             .then(res => {
                 const {user, token} = res.data
+                localStorage.setItem('token', token)
+                localStorage.setItem('user', JSON.stringify(user))
                 this.setState({
                     user,
                     token,
@@ -27,11 +36,15 @@ export default class ProfileProvider extends Component {
                 })
             })     
     }
+
     
+
     signUp = (userDat) => {
-        axios.post('/auth/signup', {...userDat})
+        return profileAxios.post('/auth/signup', {...userDat})
             .then(res => {
                 const {user, token} = res.data
+                localStorage.setItem('token', token)
+                localStorage.setItem('user', JSON.stringify(user))
                 this.setState({
                     user,
                     token,
@@ -48,10 +61,20 @@ export default class ProfileProvider extends Component {
             })
     }
 
+    logOut = () => {
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        this.setState({
+            user: {},
+            token:''
+        })
+    }
+
     render() {
         const value = {
             logIn: this.logIn,
             signUp: this.signUp,
+            logOut: this.logOut,
             ...this.state
         }
         return (

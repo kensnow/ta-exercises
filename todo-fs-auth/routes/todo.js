@@ -2,12 +2,12 @@ const express = require('express')
 const Todo = require('../models/todo')
 const Profile = require('../models/profile')
 
-
 const todoRouter = express.Router()
 
 todoRouter.route('/')
     .get((req, res, next) => {
         const profileId = req.user._id
+        
         Profile.find({user: profileId}, (err, todos) => {
             if (err){
                 res.status(500)
@@ -16,17 +16,16 @@ todoRouter.route('/')
                 return res.send(todos)
             }
         })
-
-
-
     })
     .post((req, res, next) => {
+        
         const todoData = req.body
         const todoDoc = new Todo (todoData)
         todoDoc.user = req.user._id
+        
         todoDoc.save()
             .then(savedTodo => {
-                const profileId = req.body.user._id
+                const profileId = req.user._id
                 Profile.findById(profileId)
                     .then(profile => {
                         profile.todos.push(savedTodo._id)
@@ -36,13 +35,11 @@ todoRouter.route('/')
                         res.status(500)
                         next(err)
                     })
-
             })
             .catch(err => {
                 res.status(500)
                 next(err)
             })
-
     })
 
 todoRouter.route('/:id')
@@ -75,4 +72,4 @@ todoRouter.route('/:id')
 
     })
 
-    module.exports = todoRouter
+module.exports = todoRouter
