@@ -4,6 +4,8 @@ import SignUp from './SignUp'
 import LogIn from './LogIn'
 import Welcome from './Welcome'
 import TodoLanding from './TodoLanding'
+import ProtectedRoute from './providers/ProtectedRoute'
+
 
 function MainViewRouter() {
     return (
@@ -11,7 +13,7 @@ function MainViewRouter() {
             <Route exact path='/' component={Welcome}/>
             <Route path='/login' component={LogIn}/>
             <Route path='/signup' component={SignUp}/>
-            <Route path='/todo' component={TodoLanding}/>
+            <ProtectedRoute exact path='/todo' component={TodoLanding}/>
             
         </div>
     )
